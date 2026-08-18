@@ -1,0 +1,18 @@
+.card-products-container{
+    margin: 20vh auto;
+}
+
+.card-products {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.card-products img{
+    margin-top: 40px;
+    width: 250px;
+    height: 250px;
+}
+
