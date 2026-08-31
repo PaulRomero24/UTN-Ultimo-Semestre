@@ -15,7 +15,7 @@ productos.forEach((product) => {
     const buyButton = document.createElement("button");
     buyButton.innerText = "Comprar"
 
-    content.append(content)
+    content.append(buyButton)
 
     buyButton.addEventListener("click", ()=>{
         cart.push({
