@@ -2,6 +2,11 @@ const modalContainer = document.getElementById("modal-container")
 const modalOverlay = document.getElementById("modal-overlay")
 const cartBtn = document.getElementById("cart-btn")
 
+const totalPrice = () => {
+    return cart.reduce((total, product) => {
+        return total + (product.price * product.quanty);
+    }, 0);
+}
 
 const displayCart = () => {
     modalContainer.innerHTML= "";
@@ -10,6 +15,7 @@ const displayCart = () => {
 
     //modal Header
     const modalHeader = document.createElement("div");
+    modalHeader.className = "modal-header";
     
     const modalClose = document.createElement("div");
     modalClose.innerText = "✖️"
@@ -48,7 +54,40 @@ const displayCart = () => {
         </div>
         `;
         modalContainer.append(modalBody);
+
+        const decrease = modalBody.querySelector(".quantity-btn-decrease");
+        decrease.addEventListener("click", () => {
+            if (product.quanty > 1) {
+                product.quanty--;
+                displayCart();
+            }
+
+        });
+
+        const increase = modalBody.querySelector(".quantity-btn-increase");
+        increase.addEventListener("click", () => {
+            product.quanty++;
+            displayCart();
+        });
+
+        const deleteProduct = modalBody.querySelector(".delete-product");
+        deleteProduct.addEventListener("click", () => {
+            const index = cart.findIndex((prod) => prod.id === product.id);
+            if (index !== -1) {
+                cart.splice(index, 1);
+                displayCart();
+            }
+        });
+
     })
+
+    //ModalFooter
+    const modalFooter = document.createElement("div");
+    modalFooter.className = "modal-footer";
+    modalFooter.innerHTML = `
+        <div class="modal-total">Total: ${totalPrice()}</div>
+    `;
+    modalContainer.append(modalFooter);
 
 }
 
