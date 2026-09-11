@@ -72,3 +72,37 @@ el Event Loop revisa si hay funciones esperando en la cola:
 
 
 
+## Funcion SetInterval
+
+### ¿Cómo funciona el modelo monohilo?
+**Bucle de eventos (Event Loop)**: Es el núcleo de Node.js que se encarga de recibir, procesar y coordinar las operaciones de forma asíncrona.
+**E/S no bloqueante**: Cuando llega una tarea de entrada/salida (como leer un archivo o consultar una base de datos), Node.js la delega al sistema operativo o a un grupo de hilos internos (libuv), liberando el hilo principal para atender otras solicitudes. 
+**Eficiencia**: Este diseño es extremadamente rápido y ligero para aplicaciones con mucho tráfico de red o consultas constantes de E/S.
+
+
+```sh
+const express = require('express');
+const app = express();
+
+// Simulación de una tarea pesada que consume mucha CPU
+function calcularSumaGigante() {
+  let suma = 0;
+  for (let i = 0; i < 5_000_000_000; i++) {
+    suma += i;
+  }
+  return suma;
+}
+
+// Ruta bloqueante
+app.get('/calcular-bloqueante', (req, res) => {
+  const resultado = calcularSumaGigante(); // ⚠️ El monohilo se congela aquí
+  res.send(`Resultado: ${resultado}`);
+});
+
+// Ruta rápida
+app.get('/rapida', (req, res) => {
+  res.send('¡Esta ruta responde de inmediato!');
+});
+
+app.listen(3000, () => console.log('Servidor en puerto 3000'));
+```
