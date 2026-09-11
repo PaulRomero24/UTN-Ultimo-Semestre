@@ -17,12 +17,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 
-
-public class Estudiante {
+//CLASE ENTIDAD
+public class Estudiantes2026 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Integer idEstudiante;
+    private Integer idestudiantes2026;
     private String nombre;
     private String apellido;
     private String  telefono;
