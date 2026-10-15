@@ -20,9 +20,9 @@ public class Libro {
 
     @Id
     @GeneratedValue (strategy=GenerationType.IDENTITY)
-    Integer idLibro;
-    String nombreLibro;
-    String autor;
-    Double precio;
-    Integer existencias;
+    idLibro;
+    nombreLibro;
+    autor;
+    precio;
+    existencias;
 }
