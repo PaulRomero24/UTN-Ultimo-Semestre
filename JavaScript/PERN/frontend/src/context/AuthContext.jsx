@@ -1,18 +1,17 @@
-import { useState,createContext,useContext } from "react";
-import axios from "axios";
+import { useState, createContext, useContext, useEffect } from "react";
+import Cookie from "js-cookie"
+import axios from "../api/axios";
 
 
 export const AuthContext = createContext();
 
-
-export const useAuth = () =>{
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used with AuthProvider");
   }
-   return context
-
-}
+  return context;
+};
 
 export function AuthProvider({ children }) {
   //HOOKS
@@ -21,24 +20,68 @@ export function AuthProvider({ children }) {
   const [errors, setErrors] = useState(null);
 
   //LOGIN
-  const signin = async(data) => {
-      const res = await axios.post("http://localhost:3000/api/signin",data ,{withCredentials: true,});
-      console.log(res.data)
-      setUser(res.data)
-  }
+  const signin = async (data) => {
+    try {
+      const res = await axios.post("/signin", data);
+        console.log(res.data);
+        setUser(res.data);
+        setIsAuth(true);
+      return res.data;
+
+    } catch (error) {
+      console.log(error);
+      if (Array.isArray(error.response.data)) {
+        return setErrors(error.response.data);
+      }
+      setErrors([error.response.data.message]);
+    }
+  };
 
   //REGISTRARSE
-  const signup = async(data) => {
-    const res = await axios.post("http://localhost:3000/api/signup",data ,{withCredentials: true,});
-    console.log(res.data)
-    setUser(res.data)
-  }
+  const signup = async (data) => {
+   try {
+     const res = await axios.post("/signup", data);
+      setIsAuth(true)
+      setUser(res.data);
+
+    return res.data
+
+   } catch (error) {
+      console.log(error);
+      if (Array.isArray(error.response.data)) {
+        return setErrors(error.response.data);
+      }
+      setErrors([error.response.data.message]);
+    }
+  };
+
+  //SIGNOUT
+    const signout = async() => {
+      const res = await axios.post("/signout")
+      setUser(null)
+      setIsAuth(false)
+
+      return res.data
+    }
+
+    useEffect(()=>{
+      if(Cookie.get("token")){
+        axios.get("/profile").then((res)=>{
+          setUser(res.data)
+          setIsAuth(true)
+        }).catch((error)=>{
+          setUser(null)
+          setIsAuth(false)
+          console.log(error)
+        })
+      }
+    }, [])
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuth, errors,signup,setUser,signin }}
+      value={{ user, isAuth, errors, signup, setUser, signin,signout }}
     >
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
