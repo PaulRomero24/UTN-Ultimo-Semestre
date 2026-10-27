@@ -1,4 +1,31 @@
+# DOCKER
+Docker funciona con el concepto de contenedores — pensalo así:
 
+Imaginate que tu aplicación necesita Python 3.11, ciertas librerías y una configuración específica para funcionar. En vez de instalar todo eso en tu PC, Docker crea una cajita aislada que tiene exactamente lo que necesita, nada más.
+
+Los componentes principales:
+
+Imagen → es la receta. Un archivo que describe qué tiene que tener el contenedor (qué sistema operativo, qué programas, qué archivos). Se define en un Dockerfile.
+
+Contenedor → es la receta ejecutándose. Cuando corrés una imagen, se crea un contenedor — la aplicación corriendo en esa cajita aislada.
+
+Docker Compose → cuando necesitás varios contenedores juntos (por ejemplo uno con Python y otro con MySQL), el docker-compose.yml los define y levanta todos de una con docker-compose up.
+
+## INSTALACION
+Desde Windows
+1-Activar virtualizacion
+2-Instalar **WSL**
+3-Instalar **Docker-Desktop**
+
+## CREACION DE LOS ARCHIVOS DOCKERS
+### Dockerfile
+las instrucciones para construir la imagen
+
+### Imagen
+ resultado de ejecutar el Dockerfile (se construye con docker build)
+
+ ### Compose
+ En la práctica con Compose podés saltarte el docker build manual porque en el docker-compose.yml podés poner build: . y él construye la imagen solo antes de levantar el contenedor.
 
 
 ## ERRORES QUE LE PASARON AL BARBA
