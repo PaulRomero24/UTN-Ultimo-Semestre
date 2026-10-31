@@ -1,19 +1,25 @@
 import { useEffect,useState } from "react"
-import { obtenerTareasRequest } from "../api/tareas.api"
-import { response } from "express"
-import {Card, CardTareas} from "../components/ui"
+import {CardTareas} from "../components/ui"
+import { useTareas } from "../context/TareasContext"
 
 function TareasPage() {
-  const [tareas,setTareas] = useState()
+  const [tareas,cargarTareas] = useState()
 
   useEffect(()=> {
-    obtenerTareasRequest().then((response)=>{
-      setTareas(response.data)
-    })
-  }, [])
+    cargarTareas();
+    },[])
+
+  if (tareas.length === 0){
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh - 10rem)]">
+        <h1 className="text-3xl font-bold">No hay Tareas</h1>
+      </div>
+    )
+  }
+  
 
   return ( 
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
       {
         tareas.map((tarea)=>(
           <CardTareas key={tarea.id} tarea={tarea}></CardTareas>
