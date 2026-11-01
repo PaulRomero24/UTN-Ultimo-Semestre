@@ -6,8 +6,6 @@ import {
   listarTareaRequest,
   actualizarTareaRequest,
 } from "../api/tareas.api";
-import { response } from "express";
-import { id } from "zod/v4/locales";
 
 const TareasContext = createContext();
 
@@ -36,18 +34,6 @@ export const TareasProvider = ({ children }) => {
     return res.data
   }
 
-  
-  //EDITAR TAREA
-  const editarTarea = async (id,tarea) =>{
-    try {
-      const res = actualizarTareaRequest(id,tarea)
-      return res.data
-    } catch (error) {
-      if (error.response){
-        setError([error.response.data.message])
-      }
-    }
-  }
 
     //CREAR TAREA
   const crearTarea = async (tarea) => {
@@ -70,6 +56,19 @@ export const TareasProvider = ({ children }) => {
     }
   };
 
+  //EDITAR TAREA
+ const editarTarea = async (id, tarea) => {
+    try {
+      const res = await actualizarTareaRequest(id, tarea);
+      return res.data;
+    } catch (error) {
+      if (error.response) {
+        setError([error.response.data.message]);
+      }
+    }
+    }
+
+
   return (
     <TareasContext.Provider
       value={{
@@ -82,7 +81,7 @@ export const TareasProvider = ({ children }) => {
         editarTarea,
       }}
     >
-      {children}{" "}
+      {children}
     </TareasContext.Provider>
   );
 };

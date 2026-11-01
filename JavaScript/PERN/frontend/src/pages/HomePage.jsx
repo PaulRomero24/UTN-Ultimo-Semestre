@@ -4,10 +4,10 @@ import { Card } from "../components/ui";
 
 function HomePage() {
   const data = useContext(AuthContext);
-  console.log(data);
   return (
     <Card>
       <h1 className="font-bold justify-center text-2xl py-4">
+        {" "}
         Desarrollando una Aplicacion PERN con Autenticacion de Usuarios y CRUD
         de Tareas
       </h1>

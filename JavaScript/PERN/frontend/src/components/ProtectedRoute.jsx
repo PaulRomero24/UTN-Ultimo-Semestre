@@ -1,8 +1,7 @@
-import { Navigate, Outlet } from "react-router-dom"
+import { Navigate, Outlet } from 'react-router-dom';
 
-export const ProtectedRoute =({redirectTO,isAllowed,children}) =>{
-    if(!isAllowed){
-        return <Navigate to= {redirectTO} replace />
-    }
-    return children ? children: <Outlet />
+export const ProtectedRoute = ({redirecTo, isAllowed, children}) => {
+    if(!isAllowed)return <Navigate to={redirecTo} replace />;
+    
+    return children ? children : <Outlet />;
 }

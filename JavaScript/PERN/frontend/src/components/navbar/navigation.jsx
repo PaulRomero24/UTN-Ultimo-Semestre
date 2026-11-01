@@ -1,6 +1,6 @@
 import {BiTask,MdAddTask,BiUserCircle} from "react-icons"
 
-export const publicRoutes = [
+export const PublicRoutes = [
 
   {
     name: "About",
@@ -11,7 +11,7 @@ export const publicRoutes = [
     path: "/login",
   },
   {
-    name: "Register",
+    name: "Registro",
     path: "/register",
   },
 ]

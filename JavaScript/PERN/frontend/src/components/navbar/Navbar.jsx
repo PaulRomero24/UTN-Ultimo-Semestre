@@ -1,5 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import { PrivateRoutes, publicRoutes } from "./navigation";
+import { PrivateRoutes, PublicRoutes } from "./navigation";
+
+import { Container } from "../ui/Container";
+import { twMerge } from "tailwind-merge";
 import { useAuth } from "../../context/AuthContext";
 import { BiLogOut } from "react-icons"
 
@@ -24,7 +27,7 @@ function Navbar() {
                     to={path}
                     className={twMerge(
                       "text-slate-300 items-center flex px-3 py-1 gap-x-1",
-                      location.pathname === path && "bg-sky-500",
+                      location.pathname === path && "bg-sky-500"
                     )}
                   >
                     {icon}

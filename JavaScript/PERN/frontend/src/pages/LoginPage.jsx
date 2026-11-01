@@ -46,7 +46,7 @@ function LoginPage() {
           )}
           <Button>Ingresar</Button>
         </form>
-        <div className="flex flex-col my-4">
+        <div className="flex justify-between my-4">
           <p className="mr-4">¿No tienes Cuenta?</p>
           <Link to="/register">Registrate</Link>
         </div>

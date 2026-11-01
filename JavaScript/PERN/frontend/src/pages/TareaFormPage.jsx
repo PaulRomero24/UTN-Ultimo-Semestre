@@ -25,7 +25,7 @@ function TareaFormPage() {
   const onSubmit = handleSubmit(async (data) => {
     let tarea;
     if (!params.id) {
-      const res = await crearTarea(data);
+      tarea = await crearTarea(data);
       navigate("/tareas");
     } else {
       tarea = await editarTarea(params.id, data);
@@ -46,11 +46,15 @@ function TareaFormPage() {
     <div className="flex h-[80vh] justify-center items-center">
       <Card>
         {tareasErrors.map((error, i) => (
-          <p key={i} className="bg-red-500 text-white p-2"></p>
+          <p key={i} className="bg-red-500 text-white p-2">
+            {error}
+          </p>
         ))}
-        <h2 className="text-3xl font-bold my-4">Formulairo de tareas</h2>
+               <h2 className="text-3xl font-bold my-4">
+          {params.id ? "Editar Tarea" : "Crear Tarea"}
+        </h2>
         <form onSubmit={onSubmit}>
-          <Label htmlFor="Titulo">Titulo</Label>
+          <Label htmlFor="titulo">Titulo</Label>
           <Input
             type="text"
             placeholder="Titulo"
@@ -60,14 +64,14 @@ function TareaFormPage() {
           {errors.titulo && (
             <p className="text-red-500">El titulo es requerido</p>
           )}
-          <Label htmlFor="Descripcion">Descripcion</Label>
+          <Label htmlFor="descripcion">Descripcion</Label>
           <TextArea
             type="text"
             placeholder="Descripcion"
             rows={3}
             {...register("descripcion")}
           />
-          <Button>Guardar</Button>
+          <Button>{params.id ? "Aceptar" : "Guardar"}</Button>
         </form>
       </Card>
     </div>

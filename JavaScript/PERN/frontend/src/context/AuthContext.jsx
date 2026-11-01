@@ -8,7 +8,7 @@ export const AuthContext = createContext();
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used with AuthProvider");
+    throw new Error("useAuth must be used within AuthProvider");
   }
   return context;
 };
@@ -24,7 +24,6 @@ export function AuthProvider({ children }) {
   const signin = async (data) => {
     try {
       const res = await axios.post("/signin", data);
-        console.log(res.data);
         setUser(res.data);
         setIsAuth(true);
       return res.data;
@@ -42,10 +41,9 @@ export function AuthProvider({ children }) {
   const signup = async (data) => {
    try {
      const res = await axios.post("/signup", data);
-      setIsAuth(true)
       setUser(res.data);
-
-    return res.data
+      setIsAuth(true);
+      return res.data;
 
    } catch (error) {
       console.log(error);
@@ -76,7 +74,6 @@ export function AuthProvider({ children }) {
           setUser(null)
           setIsAuth(false)
           console.log(error)
-          setLoading(false)
         })
       }
       setLoading(false)
@@ -85,7 +82,7 @@ export function AuthProvider({ children }) {
     useEffect(()=>{
       const timeout = setTimeout(()=>{
         setErrors(null)
-      },3000);
+      },4000);
       return () =>{
         clearTimeout(timeout)
       }

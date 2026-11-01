@@ -1,21 +1,27 @@
 import Navbar from "./components/navbar/Navbar";
-import { Container } from "./components/ui";
+import { Container } from "./components/ui/Container";
+
+import { ProtectedRoute } from "./components/ProtectedRoute";
+
+import { useAuth } from "./context/AuthContext";
+import { TareasProvider } from "./context/TareasContext";
 
 import { Routes, Route, Outlet } from "react-router-dom";
-import { ProtectedRoute, redirectTo } from "./components/ProtectedRoute";
 
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/LoginPage";
-import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
-import TareaFormPage from "./pages/TareaFormPage";
+import ProfilePage from "./pages/ProfilePage";
 import TareasPage from "./pages/TareasPage";
+import TareaFormPage from "./pages/TareaFormPage";
 import NotFound from "./pages/NotFound";
-import { useAuth } from "./context/AuthContext";
 
 function App() {
   const { isAuth,loading } = useAuth();
+    if (loading) {
+      return <h1>Cargando...</h1>;
+  }
 
   return (
     <>
@@ -24,7 +30,7 @@ function App() {
         <Routes>
           {/*RUTAS PUBLICAS*/}
           <Route
-            element={<ProtectedRoute isAllowed={!isAuth} redirectTO="tareas" />}
+            element={<ProtectedRoute isAllowed={!isAuth} redirectTo="tareas" />}
           />
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -35,7 +41,7 @@ function App() {
           <Route
             element={<ProtectedRoute isAllowed={isAuth} redirectTo="/login" />}
           >
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/perfil" element={<ProfilePage />} />
 
             <Route
               element={
@@ -44,9 +50,9 @@ function App() {
                 </TareasProvider>
               }
             >
-              <Route path="/task" element={<TareasPage />} />
-              <Route path="/form/create" element={<TareaFormPage />} />
-              <Route path="/form/:id/editar" element={<TareaFormPage />} />
+               <Route path="/tareas" element={<TareasPage />} />
+              <Route path="/tareas/crear" element={<TareaFormPage />} />
+              <Route path="/tareas/:id/editar" element={<TareaFormPage />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
