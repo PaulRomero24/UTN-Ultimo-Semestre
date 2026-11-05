@@ -1,0 +1,57 @@
+@startuml
+package laboratorio_usuarios {
+  class Conexion {
+    - DATABASE: String
+    - USERNAME: String
+    - PASSWORD: String
+    - DB_PORT: String
+    - HOST: String
+    - MIN_CON: int
+    - MAX_CON: int
+    - pool: Pool
+    + obtenerPool(cls): Pool
+    + obtenerConexion(cls): Connection
+    + liberarConexion(cls, conexion)
+    + cerrarConexiones(cls)
+  }
+
+  class CursorDelPool {
+    - conn: String
+    - cursor: String
+    + __init__(self)
+    + __enter__(self)
+    + __exit__(self)
+  }
+
+  class Usuario {
+    - id_usuario: int
+    - username: String
+    - password: String
+    + __str__(): String
+    + metodo Get/Set de cada atributo
+  }
+
+  class UsuarioDao {
+    - SELECCIONAR: String
+    - INSERTAR: String
+    - ACTUALIZAR: String
+    - ELIMINAR: String
+    + seleccionar(cls): List<Usuario>
+    + insertar(cls, usuario)
+    + actualizar(cls, usuario)
+    + eliminar(cls, usuario)
+  }
+
+  class MenuAppUsuario {
+    + ejecutar()
+  }
+
+  class logger_base {
+    + logger: logging
+  }
+
+  Conexion --> CursorDelPool : usa
+  UsuarioDao --> Usuario : opera sobre
+  MenuAppUsuario --> UsuarioDao : utiliza
+}
+@enduml
